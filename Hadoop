@@ -1,0 +1,200 @@
+[training@localhost ~]$ hadoop
+Usage: hadoop [--config confdir] COMMAND
+       where COMMAND is one of:
+  fs                   run a generic filesystem user client
+  version              print the version
+  jar <jar>            run a jar file
+  distcp <srcurl> <desturl> copy file or directories recursively
+  archive -archiveName NAME -p <parent path> <src>* <dest> create a hadoop archive
+  classpath            prints the class path needed to get the
+                       Hadoop jar and the required libraries
+  daemonlog            get/set the log level for each daemon
+ or
+  CLASSNAME            run the class named CLASSNAME
+
+Most commands print help when invoked w/o parameters.
+[training@localhost ~]$ hadoop -version
+Error: No command named `-version' was found. Perhaps you meant `hadoop version'
+[training@localhost ~]$ hadoop --version
+Error: No command named `--version' was found. Perhaps you meant `hadoop -version'
+[training@localhost ~]$ hadoop version
+Hadoop 2.0.0-cdh4.1.1
+Subversion file:///data/1/jenkins/workspace/generic-package-centos32-6/topdir/BUILD/hadoop-2.0.0-cdh4.1.1/src/hadoop-common-project/hadoop-common -r 581959ba23e4af85afd8db98b7687662fe9c5f20
+Compiled by jenkins on Tue Oct 16 11:07:59 PDT 2012
+From source with checksum 95f5c7f30b4030f1f327758e7b2bd61f
+[training@localhost ~]$ hadoop fs
+Usage: hadoop fs [generic options]
+	[-cat [-ignoreCrc] <src> ...]
+	[-chgrp [-R] GROUP PATH...]
+	[-chmod [-R] <MODE[,MODE]... | OCTALMODE> PATH...]
+	[-chown [-R] [OWNER][:[GROUP]] PATH...]
+	[-copyFromLocal <localsrc> ... <dst>]
+	[-copyToLocal [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-count [-q] <path> ...]
+	[-cp <src> ... <dst>]
+	[-df [-h] [<path> ...]]
+	[-du [-s] [-h] <path> ...]
+	[-expunge]
+	[-get [-ignoreCrc] [-crc] <src> ... <localdst>]
+	[-getmerge [-nl] <src> <localdst>]
+	[-help [cmd ...]]
+	[-ls [-d] [-h] [-R] [<path> ...]]
+	[-mkdir [-p] <path> ...]
+	[-moveFromLocal <localsrc> ... <dst>]
+	[-moveToLocal <src> <localdst>]
+	[-mv <src> ... <dst>]
+	[-put <localsrc> ... <dst>]
+	[-rm [-f] [-r|-R] [-skipTrash] <src> ...]
+	[-rmdir [--ignore-fail-on-non-empty] <dir> ...]
+	[-setrep [-R] [-w] <rep> <path/file> ...]
+	[-stat [format] <path> ...]
+	[-tail [-f] <file>]
+	[-test -[ezd] <path>]
+	[-text [-ignoreCrc] <src> ...]
+	[-touchz <path> ...]
+	[-usage [cmd ...]]
+
+Generic options supported are
+-conf <configuration file>     specify an application configuration file
+-D <property=value>            use value for given property
+-fs <local|namenode:port>      specify a namenode
+-jt <local|jobtracker:port>    specify a job tracker
+-files <comma separated list of files>    specify comma separated files to be copied to the map reduce cluster
+-libjars <comma separated list of jars>    specify comma separated jar files to include in the classpath.
+-archives <comma separated list of archives>    specify comma separated archives to be unarchived on the compute machines.
+
+The general command line syntax is
+bin/hadoop command [genericOptions] [commandOptions]
+
+[training@localhost ~]$ hadoop fs -ls /
+Found 5 items
+drwxr-xr-x   - hbase    supergroup          0 2023-03-01 07:04 /hbase
+drwxr-xr-x   - training supergroup          0 2023-02-14 14:53 /hiveinput
+drwxrwxrwt   - hue      supergroup          0 2023-02-14 13:04 /tmp
+drwxrwxrwx   - hue      supergroup          0 2023-01-22 15:52 /user
+drwxr-xr-x   - hdfs     supergroup          0 2023-01-22 15:52 /var
+[training@localhost ~]$ hadoop fs -ls 
+Found 17 items
+drwxr-xr-x   - training supergroup          0 2023-02-10 11:26 OddEven
+drwxr-xr-x   - training supergroup          0 2023-02-13 15:24 avgwordinput
+drwxr-xr-x   - training supergroup          0 2023-02-13 15:26 avgwordoutput
+drwxr-xr-x   - training supergroup          0 2023-02-14 01:51 cocurence
+drwxr-xr-x   - training supergroup          0 2023-02-14 01:55 cocurenceoutput
+-rw-r--r--   1 training supergroup         42 2023-02-14 01:53 cooccurence
+drwxr-xr-x   - training supergroup          0 2023-02-13 10:05 findwordinput
+drwxr-xr-x   - training supergroup          0 2023-03-01 09:10 hiveinput
+drwxr-xr-x   - training supergroup          0 2023-03-01 16:57 movie
+-rw-r--r--   1 training supergroup         73 2023-02-10 11:29 oddeveninput
+drwxr-xr-x   - training supergroup          0 2023-02-10 11:31 oddevenoutput
+drwxr-xr-x   - training supergroup          0 2023-02-10 11:48 oddevenoutput1
+drwxr-xr-x   - training supergroup          0 2023-02-12 16:01 partisioninput
+drwxr-xr-x   - training supergroup          0 2023-02-12 16:03 partisionoutput
+drwxr-xr-x   - training supergroup          0 2023-02-12 16:08 partisionoutputt
+drwxr-xr-x   - training supergroup          0 2023-02-09 19:46 wordcount
+drwxr-xr-x   - training supergroup          0 2023-02-09 19:50 wordoutput
+[training@localhost ~]$ hadoop fs -ls /
+Found 5 items
+drwxr-xr-x   - hbase    supergroup          0 2023-03-01 07:04 /hbase
+drwxr-xr-x   - training supergroup          0 2023-02-14 14:53 /hiveinput
+drwxrwxrwt   - hue      supergroup          0 2023-02-14 13:04 /tmp
+drwxrwxrwx   - hue      supergroup          0 2023-01-22 15:52 /user
+drwxr-xr-x   - hdfs     supergroup          0 2023-01-22 15:52 /var
+[training@localhost ~]$ hadoop fs -ls /user
+Found 2 items
+drwxr-xr-x   - hue      supergroup          0 2023-01-22 15:52 /user/hive
+drwxr-xr-x   - training supergroup          0 2023-03-01 16:57 /user/training
+[training@localhost ~]$ hadoop fs -ls /user/training
+Found 17 items
+drwxr-xr-x   - training supergroup          0 2023-02-10 11:26 /user/training/OddEven
+drwxr-xr-x   - training supergroup          0 2023-02-13 15:24 /user/training/avgwordinput
+drwxr-xr-x   - training supergroup          0 2023-02-13 15:26 /user/training/avgwordoutput
+drwxr-xr-x   - training supergroup          0 2023-02-14 01:51 /user/training/cocurence
+drwxr-xr-x   - training supergroup          0 2023-02-14 01:55 /user/training/cocurenceoutput
+-rw-r--r--   1 training supergroup         42 2023-02-14 01:53 /user/training/cooccurence
+drwxr-xr-x   - training supergroup          0 2023-02-13 10:05 /user/training/findwordinput
+drwxr-xr-x   - training supergroup          0 2023-03-01 09:10 /user/training/hiveinput
+drwxr-xr-x   - training supergroup          0 2023-03-01 16:57 /user/training/movie
+-rw-r--r--   1 training supergroup         73 2023-02-10 11:29 /user/training/oddeveninput
+drwxr-xr-x   - training supergroup          0 2023-02-10 11:31 /user/training/oddevenoutput
+drwxr-xr-x   - training supergroup          0 2023-02-10 11:48 /user/training/oddevenoutput1
+drwxr-xr-x   - training supergroup          0 2023-02-12 16:01 /user/training/partisioninput
+drwxr-xr-x   - training supergroup          0 2023-02-12 16:03 /user/training/partisionoutput
+drwxr-xr-x   - training supergroup          0 2023-02-12 16:08 /user/training/partisionoutputt
+drwxr-xr-x   - training supergroup          0 2023-02-09 19:46 /user/training/wordcount
+drwxr-xr-x   - training supergroup          0 2023-02-09 19:50 /user/training/wordoutput
+[training@localhost ~]$ pwd
+/home/training
+[training@localhost ~]$ ls
+AnilSession        Documents   export.java       hivedata           occupation.java  src                 workspace
+columns_priv.java  Downloads   exportt.java      lib                Pictures         Templates
+db.java            eclipse     func.java         MapReducePractice  Public           training_materials
+derby.log          emp.java    general_log.java  movie.java         SampleWork       user.java
+Desktop            event.java  genre.java        Music              scripts          Videos
+[training@localhost ~]$ cd AnilSession/
+[training@localhost AnilSession]$ ls
+command1.txt  command.txt  dest  fromHadoop  hadoop1.txt  MapReduce
+[training@localhost AnilSession]$ vi inputfile.txt
+[training@localhost AnilSession]$ cat inputfile.txt 
+this is file whose insert in hadoop 
+ok
+[training@localhost AnilSession]$ hadoop fs -mkdir inputfromlocal
+[training@localhost AnilSession]$ hadoop fs -ls inputfromlocal
+[training@localhost AnilSession]$ pwd
+/home/training/AnilSession
+[training@localhost AnilSession]$ hadoop fs -put inputfile.txt inputfromlocal
+[training@localhost AnilSession]$ hadoop fs -cat inputfromlocal/ inputfile.txt 
+cat: `inputfromlocal': Is a directory
+cat: `inputfile.txt': No such file or directory
+[training@localhost AnilSession]$ hadoop fs -cat inputfromlocal\inputfile.txt 
+cat: `inputfromlocalinputfile.txt': No such file or directory
+[training@localhost AnilSession]$ hadoop fs -cat inputfile.txt 
+cat: `inputfile.txt': No such file or directory
+[training@localhost AnilSession]$ hadoop fs -ls 
+Found 18 items
+drwxr-xr-x   - training supergroup          0 2023-02-10 11:26 OddEven
+drwxr-xr-x   - training supergroup          0 2023-02-13 15:24 avgwordinput
+drwxr-xr-x   - training supergroup          0 2023-02-13 15:26 avgwordoutput
+drwxr-xr-x   - training supergroup          0 2023-02-14 01:51 cocurence
+drwxr-xr-x   - training supergroup          0 2023-02-14 01:55 cocurenceoutput
+-rw-r--r--   1 training supergroup         42 2023-02-14 01:53 cooccurence
+drwxr-xr-x   - training supergroup          0 2023-02-13 10:05 findwordinput
+drwxr-xr-x   - training supergroup          0 2023-03-01 09:10 hiveinput
+drwxr-xr-x   - training supergroup          0 2023-03-01 17:41 inputfromlocal
+drwxr-xr-x   - training supergroup          0 2023-03-01 16:57 movie
+-rw-r--r--   1 training supergroup         73 2023-02-10 11:29 oddeveninput
+drwxr-xr-x   - training supergroup          0 2023-02-10 11:31 oddevenoutput
+drwxr-xr-x   - training supergroup          0 2023-02-10 11:48 oddevenoutput1
+drwxr-xr-x   - training supergroup          0 2023-02-12 16:01 partisioninput
+drwxr-xr-x   - training supergroup          0 2023-02-12 16:03 partisionoutput
+drwxr-xr-x   - training supergroup          0 2023-02-12 16:08 partisionoutputt
+drwxr-xr-x   - training supergroup          0 2023-02-09 19:46 wordcount
+drwxr-xr-x   - training supergroup          0 2023-02-09 19:50 wordoutput
+[training@localhost AnilSession]$ hadoop fs -ls inputfromlocal
+Found 1 items
+-rw-r--r--   1 training supergroup         40 2023-03-01 17:41 inputfromlocal/inputfile.txt
+[training@localhost AnilSession]$ hadoop fs -cat  inputfromlocal/inputfile.txt
+this is file whose insert in hadoop 
+ok
+[training@localhost AnilSession]$ hadoop fs -get  inputfromlocal/inputfile.txt inputfromlocal
+[training@localhost AnilSession]$ ls
+command1.txt  command.txt  dest  fromHadoop  hadoop1.txt  inputfile.txt  inputfromlocal  MapReduce
+[training@localhost AnilSession]$ mkdir fromhadoopdata
+[training@localhost AnilSession]$ hadoop fs -get  inputfromlocal/inputfile.txt fromhadoopdata
+[training@localhost AnilSession]$ ls
+command1.txt  command.txt  dest  fromHadoop  fromhadoopdata  hadoop1.txt  inputfile.txt  inputfromlocal  MapReduce
+[training@localhost AnilSession]$ cd from
+fromHadoop/     fromhadoopdata/ 
+[training@localhost AnilSession]$ cd fromhadoopdata
+[training@localhost fromhadoopdata]$ ls
+inputfile.txt
+[training@localhost fromhadoopdata]$ cat inputfile.txt 
+this is file whose insert in hadoop 
+ok
+[training@localhost fromhadoopdata]$ hadoop fs -rm imputfromlocal
+rm: `imputfromlocal': No such file or directory
+[training@localhost fromhadoopdata]$ hadoop fs -rm inputfromlocal
+rm: `inputfromlocal': Is a directory
+[training@localhost fromhadoopdata]$ hadoop fs -rmr inputfromlocal
+rmr: DEPRECATED: Please use 'rm -r' instead.
+Deleted inputfromlocal
+[training@localhost fromhadoopdata]$ 
